@@ -15,16 +15,17 @@ while(True):
             width, height = input.size
             output = input.crop((0, 0, width, (height - 20)))
 
-            # Could be moved into another directory
-            # if not os.path.exists('output'):
-            #     os.makedirs('output')
+            if not os.path.exists('output'):
+                os.makedirs('output')
             output.save(infile)
+            #made better for google photos
+            os.rename(infile,'output/' + infile)
             
             # Adds the tag so that it doesn't get cropped again
-            with open(infile, 'rb') as img_file:
+            with open('output/' + infile, 'rb') as img_file:
                 image = img(img_file)
             image.set('user_comment', 'True')
-            with open(infile,'wb') as new_img_file:
+            with open('output/' + infile,'wb') as new_img_file:
                 new_img_file.write(image.get_file())
         else:
             # Skips over file if tag is found
